@@ -1,0 +1,50 @@
+﻿@model HealthOps_Project.Models.WardStock
+
+@{
+    ViewData["Title"] = "Edit Ward Stock";
+}
+<partial name="_BackButton" />
+
+<h1><i class="fas fa-edit"></i> Edit Ward Stock</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="WardName" class="control-label">Ward Name</label>
+                <input asp-for="WardName" class="form-control" />
+                <span asp-validation-for="WardName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ConsumableId" class="control-label">Consumable</label>
+                <select asp-for="ConsumableId" class="form-control" asp-items="ViewBag.ConsumableId">
+                    <option value="">-- Select Consumable --</option>
+                </select>
+                <span asp-validation-for="ConsumableId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="QuantityOnHand" class="control-label">Quantity On Hand</label>
+                <input asp-for="QuantityOnHand" class="form-control" min="0" />
+                <span asp-validation-for="QuantityOnHand" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,53 @@
+@model HealthOps_Project.Models.Patient
+
+<h2>Patient Details</h2>
+
+<div class="card shadow-sm p-4">
+    <dl class="row">
+        <dt class="col-sm-3">ID Number</dt>
+        <dd class="col-sm-9">@Model.SouthAfricanID</dd>
+
+        <dt class="col-sm-3">First Name</dt>
+        <dd class="col-sm-9">@Model.FirstName</dd>
+
+        <dt class="col-sm-3">Last Name</dt>
+        <dd class="col-sm-9">@Model.LastName</dd>
+
+        <dt class="col-sm-3">Address</dt>
+        <dd class="col-sm-9">@Model.Address</dd>
+
+        <dt class="col-sm-3">Age</dt>
+        <dd class="col-sm-9">@Model.Age</dd>
+
+        <dt class="col-sm-3">Gender</dt>
+        <dd class="col-sm-9">@Model.Gender</dd>
+
+        <dt class="col-sm-3">Phone Number</dt>
+        <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Emergency Contact</dt>
+        <dd class="col-sm-9">@Model.EmergencyContact</dd>
+
+        <dt class="col-sm-3">Medical History</dt>
+        <dd class="col-sm-9">@Model.MedicalHistory</dd>
+
+        <dt class="col-sm-3">Allergies</dt>
+        <dd class="col-sm-9">@Model.Allergies</dd>
+
+        <dt class="col-sm-3">Bed</dt>
+        <dd class="col-sm-9">
+            @(Model.Bed != null ? Model.Bed.BedNumber : "No Bed Assigned")
+        </dd>
+       
+
+    
+    </dl>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.PatientId" class="btn btn-warning">Edit</a>
+    <a asp-action="PatientIndex" class="btn btn-secondary">Back to List</a>
+</div>

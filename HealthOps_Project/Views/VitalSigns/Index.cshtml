@@ -1,0 +1,82 @@
+﻿@model IEnumerable<HealthOps_Project.Models.VitalSign>
+@{
+    ViewData["Title"] = "Vital Signs";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Vital Signs</h2>
+        @if (ViewBag.Patient != null)
+        {
+            <a href="@Url.Action("Create", new { patientId = ViewBag.Patient.PatientId })" class="btn btn-primary">
+                Record New Vitals
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Action("SelectPatient")" class="btn btn-primary">
+                Select Patient
+            </a>
+        }
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (ViewBag.Patient != null)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Patient: @ViewBag.Patient.FirstName @ViewBag.Patient.LastName</h5>
+                <p class="card-text">Admission Date: @ViewBag.Patient.AdmissionDate?.ToShortDateString()</p>
+            </div>
+        </div>
+    }
+
+    @if (Model.Any())
+    {
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date Recorded</th>
+                    <th>Temperature (°C)</th>
+                    <th>BP</th>
+                    <th>HR</th>
+                    <th>O₂ Sat (%)</th>
+                    <th>Weight (kg)</th>
+                    <th>Recorded By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var v in Model)
+                {
+                    <tr>
+                        <td>@v.RecordedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@v.Temperature</td>
+                        <td>@v.BloodPressure</td>
+                        <td>@v.HeartRate</td>
+                        <td>@v.OxygenSaturation</td>
+                        <td>@v.Weight</td>
+                        <td>@v.RecordedBy</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = v.VitalId })" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="@Url.Action("Details", new { id = v.VitalId })" class="btn btn-info btn-sm">View</a>
+                            <a href="@Url.Action("Delete", new { id = v.VitalId })" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">No vital records found.</div>
+    }
+
+    <a href="/Dashboard/Nurse" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>

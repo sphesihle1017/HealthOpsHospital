@@ -1,0 +1,25 @@
+﻿@model HealthOps_Project.Models.Consumable
+<partial name="_BackButton" />
+@{
+    ViewData["Title"] = "Consumable Details";
+}
+
+<h1><i class="fas fa-box"></i> Consumable Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Description)</dd>
+
+        <dt class="col-sm-2">Unit</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Unit)</dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ConsumableId" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+</div>

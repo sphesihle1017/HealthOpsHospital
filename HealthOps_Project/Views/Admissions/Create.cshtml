@@ -1,0 +1,83 @@
+﻿@model HealthOps_Project.Models.Admission
+
+@{
+    ViewData["Title"] = "Add New Admission";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4 fw-bold text-primary border-bottom pb-2">
+        🏥 Add New Admission
+    </h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center fw-bold">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form asp-action="Create" method="post" class="shadow-lg p-4 rounded bg-light">
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="PatientId" class="form-label fw-bold text-dark">Patient</label>
+                <select asp-for="PatientId" class="form-select border-primary" asp-items="ViewBag.PatientId">
+                    <option value="">-- Select Patient --</option>
+                </select>
+                <span asp-validation-for="PatientId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="WardId" class="form-label fw-bold text-dark">Ward</label>
+                <select asp-for="WardId" class="form-select border-primary" asp-items="ViewBag.WardId">
+                    <option value="">-- Select Ward --</option>
+                </select>
+                <span asp-validation-for="WardId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="BedId" class="form-label fw-bold text-dark">Bed</label>
+                <select asp-for="BedId" class="form-select border-primary" asp-items="ViewBag.BedId">
+                    <option value="">-- Select Bed --</option>
+                </select>
+                <span asp-validation-for="BedId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="DoctorId" class="form-label fw-bold text-dark">Doctor</label>
+                <select asp-for="DoctorId" class="form-select border-primary" asp-items="ViewBag.DoctorId">
+                    <option value="">-- Select Doctor --</option>
+                </select>
+                <span asp-validation-for="DoctorId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="AdmissionDate" class="form-label fw-bold text-dark">Admission Date</label>
+                <input asp-for="AdmissionDate" type="date" class="form-control border-primary" />
+                <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="DischargeDate" class="form-label fw-bold text-dark">Expected Discharge Date</label>
+                <input asp-for="DischargeDate" type="date" class="form-control border-primary" />
+                <span asp-validation-for="DischargeDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success rounded-pill px-4 me-2 shadow-sm">
+                <i class="bi bi-check-circle"></i> Save Admission
+            </button>
+            <a asp-action="Index" class="btn btn-secondary rounded-pill px-4 shadow-sm">
+                <i class="bi bi-arrow-left-circle"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

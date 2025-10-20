@@ -1,0 +1,33 @@
+﻿@model HealthOps_Project.Models.Admission
+
+@{
+    ViewData["Title"] = "Admission Details";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4 text-info fw-bold">📋 Admission Details</h2>
+
+    <div class="card shadow-lg p-4">
+        <dl class="row">
+            <dt class="col-sm-3">Patient</dt>
+            <dd class="col-sm-9">@Model.Patient?.FirstName</dd>
+
+            <dt class="col-sm-3">Ward</dt>
+            <dd class="col-sm-9">@Model.Ward?.Name</dd>
+
+            <dt class="col-sm-3">Bed</dt>
+            <dd class="col-sm-9">@Model.Bed?.BedNumber</dd>
+
+            <dt class="col-sm-3">Admission Date</dt>
+            <dd class="col-sm-9">@Model.AdmissionDate.ToShortDateString()</dd>
+
+            <dt class="col-sm-3">Discharge Date</dt>
+            <dd class="col-sm-9">@Model.DischargeDate?.ToShortDateString()</dd>
+        </dl>
+
+        <div class="text-center mt-4">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning rounded-pill px-4 me-2">✏️ Edit</a>
+            <a asp-action="Index" class="btn btn-secondary rounded-pill px-4">⬅️ Back</a>
+        </div>
+    </div>
+</div>

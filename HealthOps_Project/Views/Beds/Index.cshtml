@@ -1,0 +1,149 @@
+﻿@model IEnumerable<HealthOps_Project.Models.Bed>
+
+@{
+    ViewData["Title"] = "Beds";
+}
+
+<div class="container-fluid p-0">
+    <!-- Full-width title bar -->
+    <div class="beds-title-bar py-3 text-center text-white fw-bold">
+        🛏 Beds
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-action="Create" class="btn btn-success rounded-pill shadow-sm fw-bold px-4">
+            ➕ Add New Bed
+        </a>
+        <a asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+            ⬅ Back to Dashboard
+        </a>
+    </div>
+
+    <table class="table shadow-sm rounded-4 overflow-hidden">
+        <thead class="table-success text-center fw-bold">
+            <tr>
+                <th>Bed Number</th>
+                <th>Availability</th>
+                <th>Ward</th>
+                <th>Room</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle text-center">
+            @foreach (var bed in Model)
+            {
+                <tr class="bed-row">
+                    <td class="fw-semibold">@bed.BedNumber</td>
+                    <td>
+                        @if (bed.IsAvailable)
+
+                        {
+                            <span class="badge bg-light text-success border border-success rounded-pill px-3 py-2">
+                                ✅ Available
+                            </span>
+                        }
+
+                        else
+
+                        {
+                            <span class="badge bg-light text-danger border border-danger rounded-pill px-3 py-2">
+                                ❌ Occupied
+                            </span>
+                        }
+                    </td>
+                    <td>@bed.Ward?.Name</td>
+                    <td>@bed.Room?.RoomNumber</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@bed.BedId"
+                           class="btn btn-info btn-sm rounded-pill fw-bold shadow-sm me-2 text-white">
+                            📋 Details
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@bed.BedId"
+                           class="btn btn-warning btn-sm rounded-pill fw-bold shadow-sm me-2 text-dark">
+                            ✏ Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@bed.BedId"
+                           class="btn btn-light text-danger border border-danger btn-sm rounded-pill fw-bold shadow-sm">
+                            🗑 Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* Title bar */
+    .beds-title-bar {
+        background: linear-gradient(90deg, #0d6d3d, #28a745, #0d6d3d);
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Table styling */
+    .table {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .table-success {
+        background: linear-gradient(90deg, #6ccf95, #8be6ac);
+        color: #034d1f;
+        font-size: 1.05rem;
+    }
+
+    /* Row background effect */
+    .bed-row {
+        background: linear-gradient(90deg, #c8f7dc, #eafaf1, #c8f7dc);
+    }
+
+        .bed-row:nth-child(even) {
+            background: linear-gradient(90deg, #b6f2d0, #e0f7ea, #b6f2d0);
+        }
+
+    /* Buttons */
+    .btn-success {
+        background: #6ccf95;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background: #57b87d;
+            transform: scale(1.05);
+        }
+
+    .btn-warning {
+        background: #ffe082;
+        border: none;
+    }
+
+        .btn-warning:hover {
+            background: #ffd54f;
+            transform: scale(1.05);
+        }
+
+    .btn-danger {
+        background: #f28b82;
+        border: none;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background: #e57373;
+            transform: scale(1.05);
+        }
+
+    .btn-info {
+        background: #64b5f6;
+        border: none;
+    }
+
+        .btn-info:hover {
+            background: #42a5f5;
+            transform: scale(1.05);
+        }
+</style>

@@ -1,0 +1,19 @@
+@model HealthOps_Project.Models.Bed
+
+@{
+    ViewData["Title"] = "Delete Bed";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-danger fw-bold">Delete Bed</h2>
+
+    <div class="alert alert-warning shadow-sm rounded-4 p-3">
+         Are you sure you want to delete the bed <strong>@Model.BedNumber</strong>?
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="BedId" />
+        <button type="submit" class="btn btn-danger rounded-pill px-4 shadow-sm fw-bold">Yes, Delete</button>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm ms-2">Back to Beds</a>
+    </form>
+</div>

@@ -1,0 +1,39 @@
+﻿@model HealthOps_Project.Models.Discharge
+
+@{
+    ViewData["Title"] = "Delete Discharge";
+}
+
+<div class="container-fluid p-0">
+    <div class="beds-title-bar py-3 text-center text-white fw-bold">
+        🗑 Delete Discharge
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-4 p-4">
+        <h4 class="text-danger fw-bold mb-3">Are you sure you want to delete this discharge?</h4>
+
+        <dl class="row">
+            <dt class="col-sm-3">Discharge Date</dt>
+            <dd class="col-sm-9">@Model.DischargeDate.ToString("yyyy-MM-dd")</dd>
+
+            <dt class="col-sm-3">Reason</dt>
+            <dd class="col-sm-9">@Model.Reason</dd>
+
+            <dt class="col-sm-3">Patient</dt>
+            <dd class="col-sm-9">@Model.Patient?.FirstName</dd>
+
+            <dt class="col-sm-3">Ward</dt>
+            <dd class="col-sm-9">@Model.Ward?.Name</dd>
+        </dl>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger rounded-pill px-4 fw-bold shadow-sm">🗑 Delete</button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill fw-bold shadow-sm">⬅ Cancel</a>
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("_DischargeStyle")

@@ -1,0 +1,94 @@
+﻿@model HealthOps_Project.Models.DoctorInstruction
+@{
+    ViewData["Title"] = "Doctor Instruction Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Instruction Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Instruction ID:</dt>
+                    <dd class="col-sm-8">@Model.DoctorInstructionId</dd>
+
+                    <dt class="col-sm-4">Patient:</dt>
+                    <dd class="col-sm-8">
+                        @Model.Patient.FirstName @Model.Patient.LastName
+                        <br />
+                        <small class="text-muted">ID: @Model.Patient.SouthAfricanID</small>
+                    </dd>
+
+                    <dt class="col-sm-4">Doctor Name:</dt>
+                    <dd class="col-sm-8">@Model.DoctorName</dd>
+
+                    <dt class="col-sm-4">Visit Date:</dt>
+                    <dd class="col-sm-8">@Model.VisitDate.ToString("dddd, MMMM dd, yyyy")</dd>
+
+                    <dt class="col-sm-4">Priority:</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Priority == "Urgent")
+                        {
+                            <span class="badge bg-danger">@Model.Priority</span>
+                        }
+                        else if (Model.Priority == "High")
+                        {
+                            <span class="badge bg-warning text-dark">@Model.Priority</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@Model.Priority</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">Status:</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.IsCompleted)
+                        {
+                            <span class="badge bg-success">Completed</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">Instructions:</dt>
+                    <dd class="col-sm-8">
+                        <div class="border rounded p-3 bg-light">
+                            @Model.Instructions
+                        </div>
+                    </dd>
+
+                    <dt class="col-sm-4">Created Date:</dt>
+                    <dd class="col-sm-8">@Model.CreatedDate.ToString("dddd, MMMM dd, yyyy hh:mm tt")</dd>
+                </dl>
+            </div>
+            <div class="card-footer">
+                <a asp-action="Edit" asp-route-id="@Model.DoctorInstructionId" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a asp-action="Delete" asp-route-id="@Model.DoctorInstructionId" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
+                @* Back to Dashboard Button (dynamic based on role) *@
+                @if (User.IsInRole("Doctor"))
+                {
+                    <a asp-controller="Doctor" asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                }
+                else if (User.IsInRole("Nurse"))
+                {
+                    <a asp-controller="Nurse" asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

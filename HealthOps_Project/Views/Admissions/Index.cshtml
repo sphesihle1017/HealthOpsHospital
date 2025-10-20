@@ -1,0 +1,78 @@
+﻿@model IEnumerable<HealthOps_Project.Models.Admission>
+
+@{
+    ViewData["Title"] = "Admissions List";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4 fw-bold text-primary">🏥 Admissions List</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["SuccessMessage"]</div>
+    }
+
+    <!-- Controls: Search bar + Buttons -->
+    <div class="row mb-3 align-items-center">
+        <!-- Search bar -->
+        <div class="col-md-6 mb-2 mb-md-0">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by Patient Name" />
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-md-6 text-md-end">
+            <a asp-action="Create" class="btn btn-success rounded-pill px-4 me-2 mb-2 mb-md-0">➕ Add New Admission</a>
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary rounded-pill px-4">🏠 Back to Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Admissions Table -->
+    <table class="table table-hover table-bordered shadow-sm">
+        <thead class="table-primary text-center">
+            <tr>
+                <th>Patient</th>
+                <th>Ward</th>
+                <th>Bed</th>
+                <th>Admission Date</th>
+                <th>Discharge Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="admissionsTableBody">
+            @foreach (var item in Model)
+            {
+                <tr class="align-middle text-center">
+                    <td>@item.Patient?.FirstName @item.Patient?.LastName</td>
+                    <td>@item.Ward?.Name</td>
+                    <td>@item.Bed?.BedNumber</td>
+                    <td>@item.AdmissionDate.ToShortDateString()</td>
+                    <td>@item.DischargeDate?.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">✏️</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info me-1">🔍</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑️</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var query = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("LiveSearch", "Admissions")',
+                    type: 'GET',
+                    data: { query: query },
+                    success: function (data) {
+                        $('#admissionsTableBody').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+}

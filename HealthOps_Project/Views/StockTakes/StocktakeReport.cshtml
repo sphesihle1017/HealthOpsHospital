@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HealthOps_Project.Models.Stocktake>
+@{
+    ViewData["Title"] = "Stocktake Report";
+    Layout = "~/Views/Shared/_PdfLayout.cshtml";
+}
+
+<div class="summary-box">
+    <div class="summary-title">Stocktake Summary</div>
+    <p><strong>Total Records:</strong> @Model.Count()</p>
+    <p><strong>Total Quantity Counted:</strong> @Model.Sum(s => s.QuantityCounted)</p>
+    <p><strong>Unique Wards:</strong> @Model.Select(s => s.WardName).Distinct().Count()</p>
+    <p><strong>Unique Consumables:</strong> @Model.Select(s => s.ConsumableId).Distinct().Count()</p>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Consumable</th>
+            <th>Ward</th>
+            <th>Quantity Counted</th>
+            <th>Date Taken</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Consumable?.Name</td>
+                <td>@item.WardName</td>
+                <td>@item.QuantityCounted</td>
+                <td>@item.DateTaken.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@item.Notes</td>
+            </tr>
+        }
+    </tbody>
+</table>

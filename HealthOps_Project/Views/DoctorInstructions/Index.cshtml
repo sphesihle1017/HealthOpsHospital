@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HealthOps_Project.Models.DoctorInstruction>
+
+@{
+    ViewData["Title"] = "Doctor Instructions";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Add New Instruction</a>
+</div>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Patient</th>
+            <th>Doctor Name</th>
+            <th>Visit Date</th>
+            <th>Priority</th>
+            <th>Completed</th>
+            <th>Created Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var instruction in Model)
+        {
+            <tr>
+                <td>@instruction.Patient.FirstName @instruction.Patient.LastName (@instruction.Patient.SouthAfricanID)</td>
+                <td>@instruction.DoctorName</td>
+                <td>@instruction.VisitDate.ToString("yyyy-MM-dd")</td>
+                <td>@instruction.Priority</td>
+                <td>@(instruction.IsCompleted ? "Yes" : "No")</td>
+                <td>@instruction.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@instruction.DoctorInstructionId" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@instruction.DoctorInstructionId" class="btn btn-sm btn-danger">Delete</a>
+                    <a asp-action="Details" asp-route-id="@instruction.DoctorInstructionId" class="btn btn-sm btn-info text-white">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

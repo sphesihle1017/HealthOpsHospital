@@ -1,0 +1,210 @@
+@model IEnumerable<HealthOps_Project.Models.Room>
+
+@{
+    ViewData["Title"] = "Room";
+}
+
+<h2 class="mb-4 text-center">Rooms</h2>
+
+<div class="mb-3">
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left-circle"></i> Back to Dashboard
+    </a>
+</div>
+
+
+<div class="mb-3 d-flex justify-content-between">
+    <input type="text" id="searchBoxAvailable" placeholder="Search available rooms..." class="form-control w-50" />
+    <a asp-action="Create" class="btn btn-primary shadow">
+        <i class="bi bi-plus-circle"></i> Add New Room
+    </a>
+</div>
+
+<!--  Info Tip Section -->
+<div class="alert alert-info d-flex align-items-center shadow-sm rounded-pill" role="alert">
+    <i class="bi bi-info-circle-fill me-2"></i>
+    <span>
+        Use the search boxes to filter rooms quickly. Click on a room row to reveal actions like
+        <strong>View Details</strong>, <strong>Edit</strong>, or <strong>Delete</strong>.
+        <br />Unavailable rooms are listed separately below with their own edit/delete options.
+    </span>
+</div>
+
+<!-- Available Rooms Table -->
+<h4 class="mt-4">Available Rooms</h4>
+<div class="table-responsive">
+    <table class="table table-hover table-bordered shadow-lg rounded-4 overflow-hidden" id="availableRoomsTable">
+        <thead class="table-dark">
+            <tr>
+                <th>Room Number</th>
+                <th>Capacity</th>
+                <th>Availability</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Where(r => r.IsAvailable))
+            {
+                <tr class="clickable-row" data-roomid="@room.RoomId">
+                    <td>@room.RoomNumber</td>
+                    <td>@room.Capacity</td>
+                    <td><span class="badge bg-success">Available</span></td>
+                </tr>
+
+                <tr class="dropdown-row" id="dropdown-@room.RoomId" style="display:none;">
+                    <td colspan="3" class="p-0">
+                        <div class="d-flex">
+                            <a asp-action="Details" asp-route-id="@room.RoomId" class="btn btn-info flex-fill action-btn">
+                                <i class="bi bi-eye"></i> Details
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@room.RoomId" class="btn btn-warning flex-fill action-btn">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@room.RoomId" class="btn btn-danger flex-fill action-btn">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Unavailable Rooms Table -->
+<h4 class="mt-5 text-danger">Unavailable Rooms</h4>
+<input type="text" id="searchBoxUnavailable" placeholder="Search unavailable rooms..." class="form-control w-50 mb-3" />
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered shadow-lg rounded-4 overflow-hidden" id="unavailableRoomsTable">
+        <thead class="table-dark">
+            <tr>
+                <th>Room Number</th>
+                <th>Capacity</th>
+                <th>Availability</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Where(r => !r.IsAvailable))
+            {
+                <tr class="clickable-row unavailable-row" data-roomid="@room.RoomId">
+                    <td>@room.RoomNumber</td>
+                    <td>@room.Capacity</td>
+                    <td><span class="badge bg-danger">Unavailable</span></td>
+                </tr>
+
+                <tr class="dropdown-row" id="dropdown-@room.RoomId" style="display:none;">
+                    <td colspan="3" class="p-0">
+                        <div class="d-flex">
+                            <a asp-action="DetailsUnavailable" asp-route-id="@room.RoomId" class="btn btn-info flex-fill action-btn">
+                                <i class="bi bi-eye"></i> Details
+                            </a>
+                            <a asp-action="EditUnavailable" asp-route-id="@room.RoomId" class="btn btn-warning flex-fill action-btn">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-action="DeleteUnavailable" asp-route-id="@room.RoomId" class="btn btn-danger flex-fill action-btn">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Row click for both tables
+            $(".clickable-row").on("click", function () {
+                let roomId = $(this).data("roomid");
+                let dropdownRow = $("#dropdown-" + roomId);
+
+                $(".dropdown-row").not(dropdownRow).hide();
+                dropdownRow.stop(true, true).slideToggle(150);
+            });
+
+            // Search for available rooms
+            $("#searchBoxAvailable").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#availableRoomsTable tbody tr.clickable-row").filter(function () {
+                    var roomNumber = $(this).find("td:first").text().toLowerCase();
+                    $(this).toggle(roomNumber.indexOf(value) > -1);
+                    if (roomNumber.indexOf(value) === -1) {
+                        $("#dropdown-" + $(this).data("roomid")).hide();
+                    }
+                });
+            });
+
+            // Search for unavailable rooms
+            $("#searchBoxUnavailable").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#unavailableRoomsTable tbody tr.clickable-row").filter(function () {
+                    var roomNumber = $(this).find("td:first").text().toLowerCase();
+                    $(this).toggle(roomNumber.indexOf(value) > -1);
+                    if (roomNumber.indexOf(value) === -1) {
+                        $("#dropdown-" + $(this).data("roomid")).hide();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <style>
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        thead th:first-child {
+            border-top-left-radius: 0.75rem;
+        }
+
+        thead th:last-child {
+            border-top-right-radius: 0.75rem;
+        }
+
+        tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 0.75rem;
+        }
+
+        tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 0.75rem;
+        }
+
+        .clickable-row {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+            .clickable-row:hover {
+                background-color: #f8f9fa;
+                transform: scale(1.01);
+                box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+            }
+
+        .unavailable-row {
+            background-color: #fff0f0;
+        }
+
+        .dropdown-row td {
+            background-color: #f1f1f1;
+        }
+
+        .action-btn {
+            border-radius: 0;
+            text-align: center;
+            font-size: 1rem;
+            padding: 12px 0;
+            font-weight: 600;
+        }
+
+        .d-flex > .action-btn:not(:last-child) {
+            border-right: 1px solid #ddd;
+        }
+    </style>
+}

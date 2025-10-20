@@ -1,0 +1,25 @@
+@model HealthOps_Project.Models.Treatment
+
+@{
+    ViewData["Title"] = "Treatment Details";
+}
+
+<h2>Treatment Details</h2>
+
+<div class="mb-3">
+    <strong>Patient:</strong>
+    @{
+        var p = Model.Patient;
+        string patientName = p != null ? $"{p.FirstName ?? ""} {p.LastName ?? ""}".Trim() : "Unknown Patient";
+    }
+    <span>@patientName</span>
+</div>
+
+<div class="mb-3"><strong>Date:</strong> @Model.TreatmentDate.ToString("g")</div>
+<div class="mb-3"><strong>Type:</strong> @Model.TreatmentType</div>
+<div class="mb-3"><strong>Details:</strong> @Model.Details</div>
+<div class="mb-3"><strong>Performed By:</strong> @Model.PerformedBy</div>
+<div class="mb-3"><strong>Notes:</strong> @(string.IsNullOrEmpty(Model.Notes) ? "None" : Model.Notes)</div>
+
+<a asp-action="Edit" asp-route-id="@Model.TreatmentId" class="btn btn-warning">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HealthOps_Project.Models.PrescriptionDelivery>
+<partial name="_BackButton" />
+@{
+    ViewData["Title"] = "Prescription Deliveries";
+}
+
+<h1>Prescription Deliveries</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Delivery</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Medication</th>
+            <th>Dosage</th>
+            <th>Status</th>
+            <th>Requested At</th>
+            <th>Delivered At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prescription.Patient.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prescription.MedicationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prescription.Dosage)
+                </td>
+                <td>
+                    <span class="badge badge-@(item.Status == "Delivered" ? "success" : item.Status == "Cancelled" ? "danger" : "warning")">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveredAt)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                    @if (item.Status != "Delivered" && item.Status != "Cancelled")
+                    {
+                        <form asp-action="MarkDelivered" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Mark Delivered</button>
+                        </form>
+                    }
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

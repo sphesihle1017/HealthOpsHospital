@@ -1,0 +1,74 @@
+@model IEnumerable<HealthOps_Project.Models.Treatment>
+
+@{
+    ViewData["Title"] = "Treatments";
+    string patientName = ViewData["PatientName"] as string;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>
+        @if (!string.IsNullOrEmpty(patientName))
+        {
+            <text>Treatments for @patientName</text>
+        }
+        else
+        {
+            <text>All Treatments</text>
+        }
+    </h2>
+
+    <div>
+        @if (!string.IsNullOrEmpty(patientName))
+        {
+            <!-- Back to all treatments -->
+            <a class="btn btn-secondary" asp-action="Index">Back to All Treatments</a>
+        }
+
+        <!-- Create new treatment -->
+        <a class="btn btn-primary" asp-action="Create">New Treatment</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Details</th>
+            <th>Performed By</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var treatment in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        // Safely display patient name
+                        var p = treatment.Patient;
+                        string displayName = p != null
+                        ? $"{p.FirstName ?? ""} {p.LastName ?? ""}".Trim()
+                        : "Unknown Patient";
+                    }
+                    @displayName
+                </td>
+                <td>@treatment.TreatmentDate.ToShortDateString()</td>
+                <td>@treatment.TreatmentType</td>
+                <td>@treatment.Details</td>
+                <td>@treatment.PerformedBy</td>
+                <td>@treatment.Notes</td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@treatment.TreatmentId">Details</a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@treatment.TreatmentId">Edit</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@treatment.TreatmentId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

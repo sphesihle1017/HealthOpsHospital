@@ -1,0 +1,143 @@
+﻿@model IEnumerable<HealthOps_Project.Models.Discharge>
+
+@{
+    ViewData["Title"] = "Discharges";
+}
+
+<div class="container-fluid p-0">
+    <div class="beds-title-bar py-3 text-center text-white fw-bold position-relative">
+        🏥 Discharges
+        <!-- Info Icon -->
+        <button type="button" class="btn btn-sm btn-light position-absolute end-0 me-3"
+                data-bs-toggle="modal" data-bs-target="#infoModal"
+                title="Click for more information"
+                style="border-radius: 50%; width: 35px; height: 35px; font-weight: bold;">
+            ℹ️
+        </button>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-action="Create" class="btn btn-success rounded-pill shadow-sm fw-bold px-4">
+            ➕ Add New Discharge
+        </a>
+        <a asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+            ⬅ Back to Dashboard
+        </a>
+    </div>
+
+    @{
+        var undoId = TempData["UndoDischargeId"] as int?;
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+
+    {
+        <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+            <span>@TempData["SuccessMessage"]</span>
+
+            @if (undoId.HasValue)
+
+            {
+                <a asp-action="UndoDelete"
+                   asp-route-id="@undoId.Value"
+                   class="btn btn-sm btn-outline-warning rounded-pill ms-3 fw-bold">
+                    ↩️ Undo
+                </a>
+            }
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <table class="table shadow-sm rounded-4 overflow-hidden">
+        <thead class="table-success text-center fw-bold">
+            <tr>
+                <th>Discharge Date</th>
+                <th>Reason</th>
+                <th>Patient</th>
+                <th>Ward</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle text-center">
+            @foreach (var discharge in Model)
+            {
+                <tr class="bed-row">
+                    <td>@discharge.DischargeDate.ToString("yyyy-MM-dd")</td>
+                    <td>@discharge.Reason</td>
+                    <td>@discharge.Patient?.FirstName @discharge.Patient?.LastName</td>
+
+                    <td>@discharge.Ward?.Name</td>
+                    <td>
+                        <!-- Inactive badge in strong orange -->
+                        <span class="badge bg-warning text-dark border border-warning rounded-pill px-3 py-2 fw-bold shadow-sm">
+                            🟠 Inactive
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@discharge.Id"
+                           class="btn btn-info btn-sm rounded-pill fw-bold shadow-sm me-2 text-white">
+                            📋 Details
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@discharge.Id"
+                           class="btn btn-warning btn-sm rounded-pill fw-bold shadow-sm me-2 text-dark">
+                            ✏ Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@discharge.Id"
+                           class="btn btn-light text-danger border border-danger btn-sm rounded-pill fw-bold shadow-sm">
+                            🗑 Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Info Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow-lg">
+            <div class="modal-header bg-success text-white rounded-top-4">
+                <h5 class="modal-title fw-bold" id="infoModalLabel">ℹ️ About Discharging a Patient</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="mb-3">
+                    Discharging a patient means officially marking their stay in the ward as completed.
+                    When you perform a discharge:
+                </p>
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item">🟠 The patient’s status in the ward will be updated to <strong class="text-warning">Inactive</strong>.</li>
+                    <li class="list-group-item">🧾 A discharge record will be saved in the system for documentation and reporting.</li>
+                    <li class="list-group-item">⚠️ Once a patient is discharged, you can still edit or view their discharge record later.</li>
+                </ul>
+                <p class="fw-bold text-success mb-0">
+                    Always confirm that all care notes and reports are completed before discharging a patient.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success rounded-pill fw-bold px-4" data-bs-dismiss="modal">
+                    Got it
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Auto-dismiss success message after 5 seconds
+        setTimeout(() => {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+            }
+        }, 5000);
+    </script>
+}
+
+@await Html.PartialAsync("_DischargeStyle")

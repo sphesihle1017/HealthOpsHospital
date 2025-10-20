@@ -1,0 +1,53 @@
+﻿@model HealthOps_Project.Models.Ward
+
+@{
+    ViewData["Title"] = "Ward Details";
+    var patients = ViewBag.PatientsInWard as List<HealthOps_Project.Models.Patient>;
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4 fw-bold text-primary">🏥 Ward: @Model.Name</h2>
+
+    <div class="card shadow-sm p-4 mb-4">
+        <h4 class="fw-bold text-secondary">Ward Information</h4>
+        <p><strong>Location:</strong> @Model.Location</p>
+        <p><strong>Is Active:</strong> @(Model.IsActive ? "✅ Yes" : "❌ No")</p>
+    </div>
+
+    <div class="card shadow-sm p-4">
+        <h4 class="fw-bold text-secondary mb-3">👩‍⚕️ Patients Currently Admitted</h4>
+
+        @if (patients != null && patients.Any())
+        {
+            <table class="table table-striped table-bordered shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Patient Number</th>
+                        <th>Full Name</th>
+                        <th>Gender</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in patients)
+                    {
+                        <tr class="align-middle text-center">
+                            <td>@p.PatientId</td>
+                            <td>@p.FirstName @p.LastName</td>
+                            <td>@p.Gender</td>
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-muted text-center fst-italic">No patients currently admitted in this ward.</p>
+        }
+    </div>
+
+    <div class="mt-4 text-center">
+        <a asp-action="Index" class="btn btn-secondary rounded-pill px-4">🔙 Back to Ward List</a>
+    </div>
+</div>

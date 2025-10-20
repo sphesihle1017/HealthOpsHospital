@@ -1,0 +1,30 @@
+﻿@model HealthOps_Project.Models.Stocktake
+@{
+    ViewData["Title"] = "Add Stocktake";
+}
+<partial name="_BackButton" />
+<h2>Add Stocktake</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="ConsumableId"></label>
+        <select asp-for="ConsumableId" class="form-select" asp-items="@(new SelectList(ViewBag.Consumables, "ConsumableId", "Name"))"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="WardName"></label>
+        <input asp-for="WardName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="QuantityCounted"></label>
+        <input asp-for="QuantityCounted" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DateTaken"></label>
+        <input asp-for="DateTaken" class="form-control" type="date" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Notes"></label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

@@ -1,0 +1,54 @@
+@model HealthOps_Project.Models.Treatment
+
+@{
+    ViewData["Title"] = "Edit Treatment";
+}
+
+<h2>Edit Treatment</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="TreatmentId" />
+
+    <div class="mb-3">
+        <label asp-for="PatientId" class="form-label">Patient</label>
+        <select asp-for="PatientId" class="form-select" asp-items="ViewBag.PatientId"></select>
+        <span asp-validation-for="PatientId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TreatmentDate" class="form-label">Treatment Date</label>
+        <input asp-for="TreatmentDate" type="datetime-local" class="form-control" />
+        <span asp-validation-for="TreatmentDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TreatmentType" class="form-label">Treatment Type</label>
+        <select asp-for="TreatmentType" class="form-select" asp-items="ViewBag.TreatmentType"></select>
+        <span asp-validation-for="TreatmentType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Details" class="form-label">Details</label>
+        <textarea asp-for="Details" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Details" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PerformedBy" class="form-label">Performed By</label>
+        <input asp-for="PerformedBy" class="form-control" />
+        <span asp-validation-for="PerformedBy" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label">Notes (Optional)</label>
+        <textarea asp-for="Notes" class="form-control" rows="2"></textarea>
+        <span asp-validation-for="Notes" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

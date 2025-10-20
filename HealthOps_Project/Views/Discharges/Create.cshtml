@@ -1,0 +1,102 @@
+﻿@model HealthOps_Project.Models.Discharge
+
+@{
+    ViewData["Title"] = "Create Discharge";
+}
+
+<div class="container-fluid p-0">
+    <div class="discharge-title-bar py-3 text-center text-white fw-bold">
+        ➕ Add New Discharge
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-4 p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="DischargeDate" class="form-label fw-bold"></label>
+                <input asp-for="DischargeDate" class="form-control" type="date" />
+                <span asp-validation-for="DischargeDate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Reason" class="form-label fw-bold"></label>
+                <input asp-for="Reason" class="form-control" placeholder="Enter discharge reason" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PatientId" class="form-label fw-bold"></label>
+                <select asp-for="PatientId" asp-items="ViewBag.PatientList" class="form-control">
+                    <option value="">-- Select Patient --</option>
+                </select>
+                <span asp-validation-for="PatientId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="WardId" class="form-label fw-bold"></label>
+                <select asp-for="WardId" asp-items="ViewBag.WardList" class="form-control">
+                    <option value="">-- Select Ward --</option>
+                </select>
+                <span asp-validation-for="WardId" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="IsActive" class="form-check-input" />
+                <label asp-for="IsActive" class="form-check-label fw-bold"></label>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success rounded-pill px-4 fw-bold shadow-sm me-2">💾 Save</button>
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill fw-bold shadow-sm">⬅ Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+<style>
+    .discharge-title-bar {
+        background: linear-gradient(90deg, #0d6d3d, #28a745, #0d6d3d);
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .card {
+        border: none;
+        background: #f9fff9;
+        transition: 0.3s ease-in-out;
+    }
+    .card:hover {
+        box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    }
+    .form-label { color: #034d1f; font-size: 1rem; }
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #cce3d1;
+        padding: 10px 14px;
+        font-size: 1rem;
+    }
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40,167,69,0.3);
+    }
+    .btn-success {
+        background: #6ccf95;
+        border: none;
+    }
+    .btn-success:hover {
+        background: #57b87d;
+        transform: scale(1.05);
+    }
+    .btn-outline-secondary:hover {
+        background: #d4edda;
+        color: #034d1f;
+        transform: scale(1.03);
+    }
+</style>

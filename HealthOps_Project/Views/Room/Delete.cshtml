@@ -1,0 +1,27 @@
+@model HealthOps_Project.Models.Room
+
+<h2 class="mb-4 text-danger">?? Delete Room</h2>
+
+<div class="alert alert-warning shadow">
+    <h5>Are you sure you want to delete this room?</h5>
+    <p>This will mark the room as inactive (soft delete). It will no longer appear in the system.</p>
+</div>
+
+<div class="card shadow p-3">
+    <dl class="row">
+        <dt class="col-sm-3">Room Number</dt>
+        <dd class="col-sm-9">@Model.RoomNumber</dd>
+
+        <dt class="col-sm-3">Capacity</dt>
+        <dd class="col-sm-9">@Model.Capacity</dd>
+
+        <dt class="col-sm-3">Available</dt>
+        <dd class="col-sm-9">@(Model.IsAvailable ? "Yes" : "No")</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="RoomId" />
+    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Confirm Delete</button>
+    <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Cancel</a>
+</form>

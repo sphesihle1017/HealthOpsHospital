@@ -1,0 +1,102 @@
+@model HealthOps_Project.Models.Patient
+
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+
+<h2>Edit Patient</h2>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <!-- Keep the PatientId hidden so EF knows which record to update -->
+    <input type="hidden" asp-for="PatientId" />
+
+    <div class="form-group mb-3">
+        <label asp-for="SouthAfricanID"></label>
+        <input asp-for="SouthAfricanID" class="form-control" readonly />
+        <span asp-validation-for="SouthAfricanID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" placeholder="Enter last name" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" placeholder="Enter address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Age"></label>
+        <input asp-for=" Age" class="form-control" placeholder="Enter age" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Gender"></label>
+        <select asp-for="Gender" class="form-control">
+            <option value="">-- Select Gender --</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" placeholder="Enter email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="EmergencyContact"></label>
+        <input asp-for="EmergencyContact" class="form-control" placeholder="Enter emergency contact" />
+        <span asp-validation-for="EmergencyContact" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="MedicalHistory"></label>
+        <input asp-for="MedicalHistory" class="form-control" placeholder="Enter medical history" />
+        <span asp-validation-for="MedicalHistory" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Allergies"></label>
+        <input asp-for="Allergies" class="form-control" placeholder="Enter allergies" />
+        <span asp-validation-for="Allergies" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="BedId"></label>
+        <select asp-for="BedId" class="form-control" asp-items="ViewBag.BedList">
+            <option value="">-- Select Bed (optional) --</option>
+        </select>
+        <span asp-validation-for="BedId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="PatientIndex" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

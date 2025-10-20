@@ -1,0 +1,44 @@
+﻿@model HealthOps_Project.Models.Bed
+
+@{
+    ViewData["Title"] = "Add New Bed";
+}
+
+<div class="container mt-4 p-4 shadow rounded-4 bg-light">
+    <h2 class="text-center text-success fw-bold mb-4">➕ Add New Bed</h2>
+
+    <form asp-action="Create" class="p-3">
+        <div class="mb-3">
+            <label asp-for="BedNumber" class="form-label fw-semibold">Bed Number</label>
+            <input asp-for="BedNumber" class="form-control rounded-pill border-success" />
+            <span asp-validation-for="BedNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="IsAvailable" class="form-label fw-semibold">Availability</label>
+            <select asp-for="IsAvailable" class="form-select rounded-pill border-success">
+                <option value="true">Available</option>
+                <option value="false">Occupied</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="WardId" class="form-label fw-semibold">Ward</label>
+            <select asp-for="WardId" class="form-select rounded-pill border-success" asp-items="ViewBag.WardId">
+                <option value="">-- Select Ward --</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RoomId" class="form-label fw-semibold">Room</label>
+            <select asp-for="RoomId" class="form-select rounded-pill border-success" asp-items="ViewBag.RoomId">
+                <option value="">-- Select Room --</option>
+            </select>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success rounded-pill px-5 fw-bold shadow">💾 Save</button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-5 fw-bold shadow ms-3">⬅ Cancel</a>
+        </div>
+    </form>
+</div>

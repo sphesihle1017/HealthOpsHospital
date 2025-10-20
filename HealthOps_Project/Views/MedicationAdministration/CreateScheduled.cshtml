@@ -1,0 +1,45 @@
+﻿@model HealthOps_Project.Models.ScheduledMedication
+@{
+    ViewData["Title"] = "Add Scheduled Medication";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Add Scheduled Medication</h2>
+
+    <form asp-action="CreateScheduled" method="post" class="mt-3">
+        <div class="mb-3">
+            <label class="form-label">Medication</label>
+            <select asp-for="MedicationId" class="form-select" asp-items="@(new SelectList((IEnumerable<HealthOps_Project.Models.Medication>)ViewData["Medications"], "MedicationId", "Name"))">
+                <option value="">-- Select Medication --</option>
+            </select>
+            <span asp-validation-for="MedicationId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Dosage" class="form-label"></label>
+            <input asp-for="Dosage" class="form-control" />
+            <span asp-validation-for="Dosage" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AdministeredDate" class="form-label"></label>
+            <input asp-for="AdministeredDate" class="form-control" type="date" />
+            <span asp-validation-for="AdministeredDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AdministeredBy" class="form-label"></label>
+            <input asp-for="AdministeredBy" class="form-control" />
+            <span asp-validation-for="AdministeredBy" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ScheduledMedicationStatus" class="form-label"></label>
+            <select asp-for="ScheduledMedicationStatus" class="form-select" asp-items="Html.GetEnumSelectList<HealthOps_Project.Models.ScheduledMedicationStatus>()"></select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="@Url.Action("Scheduled")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

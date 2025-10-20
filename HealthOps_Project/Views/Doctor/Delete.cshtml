@@ -1,0 +1,30 @@
+﻿@model HealthOps_Project.Models.Doctor
+
+@{
+    ViewData["Title"] = "Delete Doctor";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0" style="max-width:700px; margin:auto;">
+        <div class="card-header text-center text-white" style="background-color:#d4a017;">
+            <h3>Confirm Doctor Deletion</h3>
+        </div>
+        <div class="card-body text-center" style="background-color:#fff8e1;">
+            <p class="lead text-danger mb-4">Are you sure you want to deactivate this doctor?</p>
+
+            <dl class="row justify-content-center">
+                <dt class="col-sm-4 fw-bold">Name:</dt>
+                <dd class="col-sm-8">@Model.FirstName @Model.LastName</dd>
+
+                <dt class="col-sm-4 fw-bold">Specialty:</dt>
+                <dd class="col-sm-8">@Model.Specialty</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="DoctorId" />
+                <button type="submit" class="btn btn-danger px-4">🗑️ Confirm Delete</button>
+                <a asp-action="Index" class="btn btn-secondary px-4 ms-2">⬅ Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

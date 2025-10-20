@@ -1,0 +1,165 @@
+﻿@model IEnumerable<HealthOps_Project.Models.Ward>
+
+@{
+    ViewData["Title"] = "Wards";
+    var searchTerm = ViewData["SearchTerm"] as string;
+}
+
+<div class="container-fluid p-0">
+    <div class="wards-title-bar py-3 text-center text-white fw-bold shadow">
+        🏥 Hospital Wards
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a asp-action="Create" class="btn btn-success rounded-pill shadow fw-bold px-4">
+            ➕ Add New Ward
+        </a>
+        <div class="d-flex align-items-center gap-3">
+            <span class="info-icon" data-bs-toggle="tooltip" title="Use the search bar to find a ward by name. Click 'View Details' to see patients assigned to that ward.">
+                🛈
+            </span>
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-dark rounded-pill px-4 shadow-sm">
+                ⬅ Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="search-container mb-4">
+        <input id="searchInput" type="text" class="form-control shadow-sm rounded-pill px-4 py-2"
+               placeholder="🔍 Search for a ward by name..." />
+    </div>
+
+    <!-- Wards Table -->
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-gradient text-green fw-bold text-center py-3"
+             style="background: linear-gradient(90deg, #00b09b, #96c93d); font-size: 1.2rem;">
+            🌿 List of Wards
+        </div>
+
+        <div class="table-responsive fixed-table">
+            <table class="table table-hover text-center align-middle mb-0" id="wardsTable">
+                <thead class="table-success">
+                    <tr>
+                        <th class="fw-bold text-success">Ward Name</th>
+                        <th class="fw-bold text-success">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ward in Model)
+                    {
+                        <tr class="ward-row">
+                            <td class="fw-semibold text-dark fs-6">@ward.Name</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@ward.WardId"
+                                   class="btn btn-info rounded-pill fw-semibold shadow-sm text-white px-4 py-1">
+                                    📋 View Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .wards-title-bar {
+        background: linear-gradient(90deg, #007a3d, #00b44e, #007a3d);
+        font-size: 2rem;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        border-bottom: 5px solid #e0f7ea;
+    }
+
+    .info-icon {
+        font-size: 1.5rem;
+        color: #198754;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .info-icon:hover {
+            transform: scale(1.2);
+            color: #0d6efd;
+        }
+
+    .fixed-table {
+        overflow-x: hidden !important;
+        max-width: 100%;
+    }
+
+    .table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        width: 100%;
+    }
+
+    .table-success {
+        background: linear-gradient(90deg, #a8e6cf, #dcedc1);
+        color: #034d1f;
+        font-size: 1.05rem;
+        border-bottom: 2px solid #96d6a0;
+    }
+
+    .ward-row {
+        background: #f7fff9;
+        transition: all 0.3s ease;
+    }
+
+        .ward-row:hover {
+            background: #e2fbe2;
+            transform: scale(1.01);
+            box-shadow: 0 4px 10px rgba(0, 128, 0, 0.1);
+        }
+
+    .btn-success {
+        background: linear-gradient(90deg, #6dd47e, #28a745);
+        border: none;
+        color: white;
+    }
+
+    .btn-info {
+        background: linear-gradient(90deg, #4facfe, #00f2fe);
+        border: none;
+    }
+
+    .btn-outline-dark {
+        border: 2px solid #6c757d;
+        color: #343a40;
+    }
+
+    .search-container input {
+        border: 2px solid #96c93d;
+        transition: all 0.3s ease;
+        font-size: 1.05rem;
+    }
+
+        .search-container input:focus {
+            border-color: #00b09b;
+            box-shadow: 0 0 8px rgba(0, 176, 155, 0.4);
+        }
+</style>
+
+@section Scripts {
+    <script>
+        // Enable tooltip
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+
+        // Live search
+        const searchInput = document.getElementById("searchInput");
+        const tableRows = document.querySelectorAll("#wardsTable tbody tr");
+
+        searchInput.addEventListener("keyup", function () {
+            const searchText = this.value.toLowerCase();
+            tableRows.forEach(row => {
+                const wardName = row.querySelector("td:first-child").textContent.toLowerCase();
+                row.style.display = wardName.includes(searchText) ? "" : "none";
+            });
+        });
+    </script>
+}

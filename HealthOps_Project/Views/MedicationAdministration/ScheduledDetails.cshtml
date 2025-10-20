@@ -1,0 +1,48 @@
+﻿@model HealthOps_Project.Models.ScheduledMedication
+@{
+    ViewData["Title"] = "Scheduled Medication Details";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Scheduled Medication Details</h2>
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Medication Name</dt>
+                <dd class="col-sm-8">@Model.Medication?.Name</dd>
+
+                <dt class="col-sm-4">Type</dt>
+                <dd class="col-sm-8">@Model.Medication?.Type</dd>
+
+                <dt class="col-sm-4">Dosage</dt>
+                <dd class="col-sm-8">@Model.Dosage</dd>
+
+                <dt class="col-sm-4">Administered Date</dt>
+                <dd class="col-sm-8">@Model.AdministeredDate.ToShortDateString()</dd>
+
+                <dt class="col-sm-4">Administered By</dt>
+                <dd class="col-sm-8">@Model.AdministeredBy</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">@Model.ScheduledMedicationStatus</dd>
+
+                <dt class="col-sm-4">Schedule</dt>
+                <dd class="col-sm-8">@Model.Medication?.Schedule</dd>
+
+                <dt class="col-sm-4">Expiry Date</dt>
+                <dd class="col-sm-8">@Model.Medication?.ExpiryDate.ToShortDateString()</dd>
+
+                <dt class="col-sm-4">Description</dt>
+                <dd class="col-sm-8">@Model.Medication?.Description</dd>
+            </dl>
+
+            <div class="mt-3">
+                <a href="@Url.Action("EditScheduled", new { id = Model.Id })" class="btn btn-warning me-2">Edit</a>
+                <a href="@Url.Action("DeleteScheduled", new { id = Model.Id })" class="btn btn-danger me-2">Delete</a>
+                <a href="@Url.Action("Scheduled")" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

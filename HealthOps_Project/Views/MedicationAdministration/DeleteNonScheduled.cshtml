@@ -1,0 +1,33 @@
+﻿@model HealthOps_Project.Models.NonScheduledMedication
+@{
+    ViewData["Title"] = "Delete Non-Scheduled Medication";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Delete Non-Scheduled Medication</h2>
+    <div class="alert alert-warning">
+        Are you sure you want to delete this medication record?
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">Medication</dt>
+        <dd class="col-sm-9">@Model.Medication?.Name</dd>
+
+        <dt class="col-sm-3">Dosage</dt>
+        <dd class="col-sm-9">@Model.Dosage</dd>
+
+        <dt class="col-sm-3">Administered Date</dt>
+        <dd class="col-sm-9">@Model.AdministeredDate.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Administered By</dt>
+        <dd class="col-sm-9">@Model.AdministeredBy</dd>
+    </dl>
+
+    <form asp-action="DeleteNonScheduled" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="@Url.Action("NonScheduled")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+

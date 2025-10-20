@@ -1,0 +1,69 @@
+﻿@model IEnumerable<HealthOps_Project.Models.WardStock>
+
+@{
+    ViewData["Title"] = "Low Stock Alert";
+}
+<partial name="_BackButton" />
+
+<h1><i class="fas fa-exclamation-triangle"></i> Low Stock Alert</h1>
+
+<div class="alert alert-warning">
+    <i class="fas fa-info-circle"></i> The following items are running low on stock (less than 10 units) and may need replenishment.
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-success">
+        <i class="fas fa-check-circle"></i> No low stock items found. All stock levels are adequate.
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0"><i class="fas fa-list"></i> Low Stock Items (Less than 10 units)</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="table-warning">
+                    <tr>
+                        <th>Ward Name</th>
+                        <th>Consumable</th>
+                        <th>Quantity On Hand</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.WardName</td>
+                            <td>@item.Consumable?.Name</td>
+                            <td class="fw-bold text-danger">@item.QuantityOnHand</td>
+                            <td>
+                                <span class="badge bg-danger">
+                                    @GetStockStatus(item.QuantityOnHand)
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to All Stocks</a>
+    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Stock</a>
+</div>
+
+@functions {
+    public string GetStockStatus(int quantityOnHand)
+    {
+        if (quantityOnHand == 0) return "Out of Stock";
+        if (quantityOnHand < 5) return "Very Low";
+        if (quantityOnHand < 10) return "Low";
+        return "Adequate";
+    }
+}

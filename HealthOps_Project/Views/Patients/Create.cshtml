@@ -1,0 +1,175 @@
+@model HealthOps_Project.Models.Patient
+
+@{
+    ViewData["Title"] = "Create Patient";
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #cce7ff, #99d6ff); /* Light blue gradient */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #1a3d6d;
+        text-shadow: 1px 1px 2px #ffffffaa;
+    }
+
+    form {
+        max-width: 1100px; /* Wider form */
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #ffffffcc;
+        border-radius: 15px;
+        box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #1a3d6d;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #dcdcdc;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+        .form-control:focus {
+            border-color: #3399ff;
+            box-shadow: 0 0 5px rgba(51,153,255,0.5);
+        }
+
+    .row .col-md-6 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #3399ff, #0066cc);
+        border: none;
+        border-radius: 10px;
+        padding: 10px 25px;
+        transition: transform 0.2s;
+    }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #0066cc, #3399ff);
+        }
+
+    .btn-secondary {
+        border-radius: 10px;
+        padding: 10px 25px;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+        margin-top: 3px;
+    }
+</style>
+
+<h2>Register Patient</h2>
+
+<form asp-action="Create" method="post">
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="SouthAfricanID" class="form-label">ID Number</label>
+            <input asp-for="SouthAfricanID" class="form-control" placeholder="Enter 13-digit SA ID" />
+            <span asp-validation-for="SouthAfricanID" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="FirstName" class="form-label">First Name</label>
+            <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="LastName" class="form-label">Last Name</label>
+            <input asp-for="LastName" class="form-control" placeholder="Enter last name" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Age" class="form-label">Age</label>
+            <input asp-for="Age" class="form-control" placeholder="Enter age" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Gender" class="form-label">Gender</label>
+            <select asp-for="Gender" class="form-control">
+                <option value="">-- Select Gender --</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label">Address</label>
+        <input asp-for="Address" class="form-control" placeholder="Enter address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="Enter email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="EmergencyContact" class="form-label">Emergency Contact</label>
+            <input asp-for="EmergencyContact" class="form-control" placeholder="Enter emergency contact" />
+            <span asp-validation-for="EmergencyContact" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="MedicalHistory" class="form-label">Medical History</label>
+            <input asp-for="MedicalHistory" class="form-control" placeholder="Enter medical history" />
+            <span asp-validation-for="MedicalHistory" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Allergies" class="form-label">Allergies</label>
+            <input asp-for="Allergies" class="form-control" placeholder="Enter allergies" />
+            <span asp-validation-for="Allergies" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BedId" class="form-label">Bed Number</label>
+        <select asp-for="BedId" class="form-control" asp-items="ViewBag.BedList">
+            <option value="">-- Select Bed (optional) --</option>
+        </select>
+        <span asp-validation-for="BedId" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mt-4">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="PatientIndex" class="btn btn-secondary">Cancel</a>
+    </div>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

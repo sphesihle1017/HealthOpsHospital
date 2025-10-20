@@ -1,0 +1,96 @@
+﻿@model HealthOps_Project.Models.Ward
+
+@{
+    ViewData["Title"] = "Create Ward";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-success fw-bold text-center">➕ Add New Ward</h2>
+
+    <!-- Success Message -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center fw-semibold shadow-sm rounded-pill">
+            ✅ @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <!-- Create Ward Form -->
+    <div class="card shadow-lg rounded-4 p-4">
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label fw-semibold"></label>
+                <input asp-for="Name" class="form-control rounded-pill shadow-sm" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Location" class="form-label fw-semibold"></label>
+                <input asp-for="Location" class="form-control rounded-pill shadow-sm" />
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="IsActive" class="form-check-input" />
+                <label asp-for="IsActive" class="form-check-label fw-semibold"></label>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success px-4 rounded-pill fw-bold shadow-sm">
+                    💾 Save
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary px-4 rounded-pill fw-semibold shadow-sm">
+                    ⬅ Back to Wards
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Custom Styling -->
+<style>
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        background: #ffffff;
+        border: 2px solid #e6f4ea;
+    }
+
+    .form-control {
+        border: 1px solid #d1e7dd;
+        transition: 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #198754;
+        box-shadow: 0px 0px 6px rgba(25, 135, 84, 0.5);
+    }
+
+    .btn-success {
+        background: linear-gradient(90deg, #28a745, #218838);
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(90deg, #218838, #19692c);
+        transform: scale(1.05);
+    }
+
+    .btn-outline-secondary {
+        border: 2px solid #6c757d;
+        color: #6c757d;
+    }
+
+    .btn-outline-secondary:hover {
+        background: #6c757d;
+        color: #fff;
+        transform: scale(1.05);
+    }
+
+    .alert-success {
+        font-size: 1.1rem;
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+</style>

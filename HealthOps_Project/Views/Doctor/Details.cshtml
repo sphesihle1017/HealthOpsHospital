@@ -1,0 +1,33 @@
+﻿@model HealthOps_Project.Models.Doctor
+
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0" style="max-width:700px; margin:auto;">
+        <div class="card-header text-center text-white" style="background-color:#d4a017;">
+            <h3>Doctor Details</h3>
+        </div>
+        <div class="card-body" style="background-color:#fff8e1;">
+            <dl class="row">
+                <dt class="col-sm-4 fw-bold">First Name:</dt>
+                <dd class="col-sm-8">@Model.FirstName</dd>
+
+                <dt class="col-sm-4 fw-bold">Last Name:</dt>
+                <dd class="col-sm-8">@Model.LastName</dd>
+
+                <dt class="col-sm-4 fw-bold">Specialty:</dt>
+                <dd class="col-sm-8">@Model.Specialty</dd>
+
+                <dt class="col-sm-4 fw-bold">Phone Number:</dt>
+                <dd class="col-sm-8">@Model.PhoneNumber</dd>
+            </dl>
+
+            <div class="text-center mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.DoctorId" class="btn btn-warning px-4 me-2">✏️ Edit</a>
+                <a asp-action="Index" class="btn btn-secondary px-4">⬅ Back</a>
+            </div>
+        </div>
+    </div>
+</div>

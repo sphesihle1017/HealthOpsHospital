@@ -1,0 +1,30 @@
+﻿@model HealthOps_Project.Models.Bed
+
+@{
+    ViewData["Title"] = "Bed Details";
+}
+
+<div class="container mt-4 p-4 shadow rounded-4 bg-white">
+    <h2 class="text-center text-info fw-bold mb-4">📋 Bed Details</h2>
+
+    <dl class="row">
+        <dt class="col-sm-3 fw-semibold">Bed Number:</dt>
+        <dd class="col-sm-9">@Model.BedNumber</dd>
+
+        <dt class="col-sm-3 fw-semibold">Availability:</dt>
+        <dd class="col-sm-9">
+            @(Model.IsAvailable ? "✅ Available" : "❌ Occupied")
+        </dd>
+
+        <dt class="col-sm-3 fw-semibold">Ward:</dt>
+        <dd class="col-sm-9">@Model.Ward?.Name</dd>
+
+        <dt class="col-sm-3 fw-semibold">Room:</dt>
+        <dd class="col-sm-9">@Model.Room?.RoomNumber</dd>
+    </dl>
+
+    <div class="text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.BedId" class="btn btn-warning rounded-pill fw-bold shadow me-2 text-dark">✏ Edit</a>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill fw-bold shadow">⬅ Back</a>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+﻿@model HealthOps_Project.Models.WardStock
+
+@{
+    ViewData["Title"] = "Ward Stock Details";
+}
+
+<h1><i class="fas fa-info-circle"></i> Ward Stock Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Ward Name</dt>
+            <dd class="col-sm-9">@Model.WardName</dd>
+
+            <dt class="col-sm-3">Consumable</dt>
+            <dd class="col-sm-9">@Model.Consumable?.Name</dd>
+
+            <dt class="col-sm-3">Quantity On Hand</dt>
+            <dd class="col-sm-9">@Model.QuantityOnHand</dd>
+
+            <dt class="col-sm-3">Stock Status</dt>
+            <dd class="col-sm-9">
+                <span class="badge @GetStockStatusBadge(Model.QuantityOnHand)">
+                    @GetStockStatus(Model.QuantityOnHand)
+                </span>
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</a>
+</div>
+
+@functions {
+    public string GetStockStatus(int quantityOnHand)
+    {
+        if (quantityOnHand == 0) return "Out of Stock";
+        if (quantityOnHand < 5) return "Very Low";
+        if (quantityOnHand < 10) return "Low";
+        return "Adequate";
+    }
+
+    public string GetStockStatusBadge(int quantityOnHand)
+    {
+        if (quantityOnHand == 0) return "bg-danger";
+        if (quantityOnHand < 5) return "bg-danger";
+        if (quantityOnHand < 10) return "bg-warning";
+        return "bg-success";
+    }
+}
