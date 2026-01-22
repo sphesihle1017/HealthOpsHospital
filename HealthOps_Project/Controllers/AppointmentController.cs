@@ -192,9 +192,9 @@ namespace HealthOps_Project.Controllers
 
             // SMTP settings
             var smtpHost = "smtp.gmail.com";           // Your SMTP server
-            var smtpPort = 587;                        // TLS port
-            var smtpUser = "sphesihlesbani@gmail.com";     // Your email
-            var smtpPass = "qgoa ogrp etqg unkc";        // App password (if 2FA enabled)
+            var smtpPort = ;                        // TLS port
+            var smtpUser = "";     // Your email
+            var smtpPass = "";        // App password (if 2FA enabled)
 
             // Logo URL (hosted in wwwroot/images or external)
             var logoUrl = "https://yourdomain.com/images/icon.jpeg";
